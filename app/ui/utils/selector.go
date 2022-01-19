@@ -24,6 +24,12 @@ func (s *SelectorWrapper) CopySelection() map[int]struct{} {
 	for se := range s.Selection {
 		selection[se] = struct{}{}
 	}
+
+	// If there was only selection, then we treat it as a one-off transaction, and reset the current selection.
+	if len(s.Selection) == 1 {
+		s.Selection = map[int]struct{}{}
+	}
+
 	return selection
 }
 
